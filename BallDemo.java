@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 
 /**
@@ -33,7 +34,7 @@ public class BallDemo
         myCanvas.setVisible(true);
 
         // draw the ground
-        myCanvas.drawLine(50, ground, 550, ground);
+        myCanvas.drawLine( 10, ground, 50, 10);
 
         // crate and show the balls
         BouncingBall ball = new BouncingBall(50, 50, 16, Color.BLUE, ground, myCanvas);
@@ -51,6 +52,36 @@ public class BallDemo
             if(ball.getXPosition() >= 550 || ball2.getXPosition() >= 550) {
                 finished = true;
             }
+        }
+    }
+    
+    public void boxBounce()
+    {
+        int ground = 400;   // position of the ground line
+        int time = 0;
+        myCanvas.setVisible(true);
+
+        // draw the ground
+        myCanvas.fillRectangle(50, 100, 500, 300);
+        
+        // crate and show the balls
+        BoxBall ball = new BoxBall(50, 100, 16, Color.BLUE, ground, myCanvas);
+        ball.draw();
+        BoxBall ball2 = new BoxBall(70, 100, 20, Color.RED, ground, myCanvas);
+        ball2.draw();
+
+        // make them bounce
+        boolean finished =  false;
+        while(!finished) {
+            myCanvas.wait(50);           // small delay
+            ball.move();
+            ball2.move();
+            
+            // stop once ball has travelled a certain distance on x axis
+            if(time == 500) {
+                finished = true;
+            }
+            time++;
         }
     }
 }

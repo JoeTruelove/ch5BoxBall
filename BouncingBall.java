@@ -75,14 +75,14 @@ public class BouncingBall
     {
         // remove from canvas at the current position
         erase();
-            
+        int groundRectangle = groundPosition + 50;
         // compute new position
         ySpeed += GRAVITY;
         yPosition += ySpeed;
         xPosition +=2;
 
         // check if it has hit the ground
-        if(yPosition >= (groundPosition - diameter) && ySpeed > 0) {
+        if(yPosition >= (groundRectangle - diameter) && ySpeed > 0) {
             yPosition = (int)(groundPosition - diameter);
             ySpeed = -ySpeed + ballDegradation; 
         }
