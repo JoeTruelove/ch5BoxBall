@@ -2,15 +2,13 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.Random;
 /**
- * Write a description of class BoxBall here.
+ * Create balls that bounce within a set param
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Joseph Truelove
+ * @version 2018.10.22
  */
 public class BoxBall
 {
-    // instance variables - replace the example below with your own
-    private static final int GRAVITY = 3;
     
     private Ellipse2D.Double circle;
     private int xPosition;
@@ -20,12 +18,12 @@ public class BoxBall
     private Color color;
     private final int groundPosition;
     private Random random = new Random();
-    private int ySpeed = random.nextInt(8);
-    private int xSpeed = random.nextInt(8);
-    private int ballDegradation = 2;
+    private int ySpeed = random.nextInt(7) + 1;
+    private int xSpeed = random.nextInt(7) + 1;
+    
 
     /**
-     * Constructor for objects of class BoxBall
+     * Constructor for BoxBall
      */
     public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor, 
                    int groundPos, Canvas drawingCanvas)
@@ -38,46 +36,48 @@ public class BoxBall
         canvas = drawingCanvas;
     }
     
+    /**
+     * draws the ball
+     */
     public void draw()
     {
         canvas.setForegroundColor(color);
         canvas.fillCircle(xPosition, yPosition, diameter);
     }
     
+    /**
+     * erase the ball
+     */
     public void erase()
     {
         canvas.eraseCircle(xPosition, yPosition, diameter);
     }   
     
+    /**
+     * creates a pattern for how the ball moves and interacts with walls
+     */
     public void move()
     {
         // remove from canvas at the current position
         erase();
-            
-        // compute new position
+        
         int height = 400;
-        int width = 200;
+        int width = 550;
         yPosition += ySpeed;
         xPosition += xSpeed;
-        xPosition += 2;
-        yPosition += 2;
         
-        if(xSpeed == 0 || ySpeed == 0)  {
-            xSpeed++;
-            ySpeed++;
-        }
-        // check if it has hit the ground
+        // check if it has hit the walls
         if(yPosition > (height - diameter)) {
             yPosition = height - diameter;
             ySpeed = -ySpeed; 
             
         }
-        if(yPosition < 0)   {
-            
+        if(yPosition < 100)   {
+            yPosition = 100;
             ySpeed = -ySpeed;
         }
-        if(xPosition < 0)   {
-            
+        if(xPosition < 50)   {
+            xPosition = 50;
             xSpeed = -xSpeed;
         }
         if(xPosition > (width - diameter))  {
@@ -88,11 +88,17 @@ public class BoxBall
         draw();
     }  
     
+    /**
+     * get the x Position
+     */
     public int getXPosition()
     {
         return xPosition;
     }
     
+    /**
+     * get the y Position
+     */
     public int getYPosition()
     {
         return yPosition;
